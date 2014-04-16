@@ -1,0 +1,9 @@
+[
+    {"ai":5},
+    {"id": 1, "title":"Table of Contents", "text":"In PHP 5.5 and later, a finally block may also be specified after the catch blocks. Code within the finally block will always be executed after the try and catch blocks, regardless of whether an exception has been thrown, and before normal execution resumes.", "link":"post1", "date":"02.04.2014", "author":"Admin", "status":"public","category":"news" ,"visibly":1},
+    {"id": 2, "title":"The new keyword", "text":"To create an instance of a class, the new keyword must be used. An object will always be created unless the object has a constructor defined that throws an exception on error. Classes should be defined before instantiation (and in some cases this is a requirement)", "link":"post2", "date":"04.04.2014", "author":"Vasia", "status":"public","category":"news" ,"visibly":1},
+    {"id": 3, "title":"PHP IDE", "text":"PhpDesigner, PHP Expert Editor, IDE NetBeans, Dreamweaver, Borland Delphi for PHP, Eclipse PDT, Zend Studio", "link":"post3", "date":"05.04.2014", "author":"Admin", "status":"public","category":"php" ,"visibly":1},
+    {"id": 4, "title":"Basic class", "text":"Basic class definitions begin with the keyword class, followed by a class name, followed by a pair of curly braces which enclose the definitions of the properties and methods belonging to the class.", "link":"post4", "date":"07.04.2014", "author":"Admin", "status":"public","category":"php" ,"visibly":1},
+    {"id": 5, "title":"PHP and UTF-8", "text":"Basic class definitions begin with the keyword class, followed by a class name, followed by a pair of curly braces which enclose the definitions of the properties and methods belonging to the class.", "link":"post5", "date":"09.04.2014", "author":"Vasia", "status":"public","category":"php" ,"visibly":1}
+
+]
