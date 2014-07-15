@@ -1,121 +1,32 @@
 <?php
 
-//header("Content-type: text/html; charset=utf-8");
-
-class jDbSimple
+class Jdb
 {
-    const DEBUG = true;
-    const BACKUP = true;
-    const SAVE = true;
-    const SORT = false;
-    public $autoBackup = true;
-    public $autoSave = true;
-    public $autoSort = false;
+    public $autoSave = false;
+    public $autoIncr;
+    protected $path;
+    protected static $conf;
+    protected $jsonFile;
+    protected $fileHandle;
+    protected $fileDataOri = array();
+    protected $fileData = array();
 
-    public $ai;
-    public $filePath;
-    public $fileData = array();
-    public $fileDataOriginal = array();
-    public $tblColumns;
-
-    /**
-     * @param $filePath
-     */
-    public function __construct($filePath)
+    public function __construct()
     {
-        if (file_exists($filePath)) {
-            $this->filePath = $filePath;
-            $fileData = json_decode(file_get_contents($filePath), true);
-            $this->ai = array_shift($fileData);
-            $this->tblColumns = array_keys($fileData[0]);
-            $this->fileData = $fileData;
-        }else{
-            die('Файл не найден ' . $filePath);
-        }
+        $defaultConfig = array(
+            'path' => './databaseJSON/',
+            'fileExtension' => '.json',
+        );
+        self::$conf = $defaultConfig;
     }
 
     public function __destruct()
     {
-	    //if($this->autoSave)
-        //	$this->save();
-        //fclose($this->fileHandle);
+	    if($this->autoSave)
+        	$this->save();
     }
 
-    public function fetchAll() {
-        return $this->fileData;
-    }
-
-    public function __call($column, $args) {
-        
-    }
-
-    public function __set($op, $args) {
-
-    }
-
-    public function __get($args) {
-        //var_dump($args);
-    }
-
-    public function save()
-    {
-        $fileData = $this->fileData;
-        array_unshift($fileData, array('ai' => $this->ai));
-        if ($this->autoSort)
-            $this->sortBy('id');
-        if (!file_put_contents($this->filePath, json_encode($fileData)))
-            die('Ошибка сохранения');
-        else
-            return true;
-    }
-
-    public function sortBy($attr = 'id', $asc = 'ACS', $num = false)
-    {
-        $selectData = $this->fileData;
-        if (strtoupper($asc) == 'ACS') {
-            if ($num)
-                usort($selectData, function ($a, $b) use ($attr) {
-                    return ($a[$attr] - $b[$attr]);
-                });
-            else
-                uasort($selectData, function ($first, $second) use ($attr) {
-                    if ($first[$attr] == $second[$attr]) {
-                        return 0;
-                    }
-                    return ($first[$attr] > $second[$attr]) ? 1 : -1;
-                });
-        } elseif (strtoupper($asc) == 'DESC') {
-            if ($num)
-                usort($selectData, function ($a, $b) use ($attr) {
-                    return ($b[$attr] - $a[$attr]);
-                });
-            else
-                uasort($selectData, function ($first, $second) use ($attr) {
-                    if ($first[$attr] == $second[$attr]) {
-                        return 0;
-                    }
-                    return ($first[$attr] < $second[$attr]) ? 1 : -1;
-                });
-        }
-        $this->fileData = $selectData;
-        return $this;
-    }
-
-    public static function Error($msgHeader, $msgText){
-        if(self::DEBUG){
-            $page = '
-            <div style="display:block; background-color:#A0341E; color:#FFF;">
-                <h2>'.$msgHeader.'</h2>
-                <p>'.$msgText.'</p>
-                <div>
-                    <code><pre></pre></code>
-                </div>
-            </div>';
-            die($page);
-        } else return false;
-    }
-
-   /* public function open($table)
+    public function open($table)
     {
         $jsonFile = self::$conf['path'] . $table . self::$conf['fileExtension'];
         if (file_exists($jsonFile)) {
@@ -138,10 +49,21 @@ class jDbSimple
     public function getTable()
     {
         return $this->jsonFile;
-    }*/
+    }
 
+    protected function lockFile($path)
+    {
+        /*$handle = fopen($path, "w");
+        if (flock($handle, LOCK_EX))
+            $this->fileHandle = $handle;
+        else die("JsonTable Error: Can't set file-lock");*/
+    }
 
-/*
+    protected function unlockFile()
+    {
+	    flock($this->jsonFile, LOCK_UN); // отпираем файл
+    }
+
     protected function autoIncrement() { }
 
     public function __call($op, $args) { }
@@ -262,7 +184,7 @@ class jDbSimple
             return false;
     }
 
-    public function delete($arg1, $arg2 = null, $remove = false)
+    public function delete($arg1, $arg2 = null, $remove = true)
     {
         if ($arg2 != null) {
             $this->open($arg1);
@@ -440,40 +362,5 @@ class jDbSimple
             die('Error, save file!');
         else return true;
     }
-*/
+
 }
-
-$j = new jDbSimple('./database/data.json');
-//var_dump($j->fileData);
-
-//$j->title;
-
-
-
-/**/
-$s_array = array("a"=>"елемент1","b"=>"елемент2","c"=>"елемент3",);
-foreach ($s_array as $elem):
-
-echo $elem['a']." - ".$elem['b']." - ".$elem['c'].";";
-
-endforeach;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
