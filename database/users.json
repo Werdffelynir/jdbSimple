@@ -1,7 +1,0 @@
-[
-    {"ai":4},
-    {"id":1,"email":"admin@admin.com","password":"admin","login":"admin","name":"Admin Adminionov","role":"2"},
-    {"id":2,"email":"vasia@zz.com","password":"vasia","login":"vasia","name":"Vasiliy Morozov","role":"1"},
-    {"id":3,"email":"petia@aa.com","password":"petia","login":"petia","name":"Petyko Babura","role":"1"},
-    {"id":4,"email":"masha@ww.com","password":"masha","login":"masha","name":"Mashka Kozlova","role":"1"}
-]
